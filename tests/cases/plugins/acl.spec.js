@@ -47,7 +47,7 @@ describe('Acl plugin testing:', () => {
     }).then((createdPlugin) => {
       expect(createdPlugin.name).toEqual('acl');
       expect(createdPlugin.api_id).toBeUndefined();
-      expect(createdPlugin.config).toEqual({'blacklist': ['foo', 'bar']});
+      expect(createdPlugin.config).toEqual({'blacklist': ['foo', 'bar'], 'hide_groups_header': false});
 
       // making sure form got reinitialized.
       expect(PropertyInput.getElement('config-blacklist').isPresent()).toBeFalsy();
@@ -70,7 +70,7 @@ describe('Acl plugin testing:', () => {
     }).then((createdPlugin) => {
       expect(createdPlugin.name).toEqual('acl');
       expect(createdPlugin.api_id).toEqual(api.id);
-      expect(createdPlugin.config).toEqual({'whitelist': ['foo']});
+      expect(createdPlugin.config).toEqual({'whitelist': ['foo'], 'hide_groups_header': false});
       done();
     });
   });
@@ -92,7 +92,7 @@ describe('Acl plugin testing:', () => {
     }).then((updatedPlugin) => {
       expect(updatedPlugin.name).toEqual('acl');
       expect(updatedPlugin.api_id).toBeUndefined();
-      expect(updatedPlugin.config).toEqual({'whitelist': ['admin'], 'blacklist': {}});
+      expect(updatedPlugin.config).toEqual({'whitelist': ['admin'], 'blacklist': {}, 'hide_groups_header': false});
       done();
     });
   });

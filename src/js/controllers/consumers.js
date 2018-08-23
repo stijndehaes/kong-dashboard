@@ -23,7 +23,7 @@ angular.module('app').controller("ConsumersController", ["$scope", "Kong", "env"
         $scope.total = 0;
       }
       $scope.consumers.push.apply($scope.consumers, collection.data);
-      $scope.total += collection.total;
+      $scope.total += collection.data.length;
       $scope.offset = collection.offset ? collection.offset : null;
     });
   };
@@ -65,9 +65,10 @@ angular.module('app').controller("ConsumersController", ["$scope", "Kong", "env"
         $scope.searchResults[value.id] = value.username || value.custom_id;
       });
     };
-
-    Kong.get('/consumers?username=' + input).then(populateResults);
-    Kong.get('/consumers?id=' + input).then(populateResults);
+    if (["0.9.", "0.10", "0.11", "0.12", "0.13"].includes(env.kong_version.substring(0,4))) {
+      Kong.get('/consumers?username=' + input).then(populateResults);
+      Kong.get('/consumers?id=' + input).then(populateResults);
+    }
     Kong.get('/consumers?custom_id=' + input).then(populateResults);
     Kong.get('/oauth2?client_id=' + input).then(function(response) {
       angular.forEach(response.data, function(value) {
