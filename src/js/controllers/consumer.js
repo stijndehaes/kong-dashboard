@@ -24,7 +24,7 @@ function ConsumerController($scope, Kong, $location, $routeParams, consumer, Ale
   }
 
   $scope.save = function () {
-    Kong.put('/consumers', $scope.consumer).then(function () {
+    Kong.post('/consumers', $scope.consumer).then(function () {
       if ($routeParams.id) {
         Alert.success('Consumer updated');
       } else {

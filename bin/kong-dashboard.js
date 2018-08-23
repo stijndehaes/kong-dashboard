@@ -162,7 +162,7 @@ function start(argv) {
       terminal.error("This version of Kong dashboard doesn't support Kong v0.9 and lower.");
       process.exit(1);
     }
-    if (semver.gte(version, '0.14.0')) {
+    if (semver.gte(version, '0.15.0')) {
       terminal.error("This version of Kong dashboard doesn't support Kong v0.14 and higher.");
       process.exit(1);
     }
