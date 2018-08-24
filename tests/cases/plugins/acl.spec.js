@@ -47,7 +47,11 @@ describe('Acl plugin testing:', () => {
     }).then((createdPlugin) => {
       expect(createdPlugin.name).toEqual('acl');
       expect(createdPlugin.api_id).toBeUndefined();
-      expect(createdPlugin.config).toEqual({'blacklist': ['foo', 'bar'], 'hide_groups_header': false});
+      if (['0.10', '0.11', '0.12', '0.13'].includes(process.env.KONG_VERSION)) {
+        expect(createdPlugin.config).toEqual({'blacklist': ['foo', 'bar']});
+      } else {
+        expect(createdPlugin.config).toEqual({'blacklist': ['foo', 'bar'], 'hide_groups_header': false});
+      }
 
       // making sure form got reinitialized.
       expect(PropertyInput.getElement('config-blacklist').isPresent()).toBeFalsy();
@@ -70,7 +74,11 @@ describe('Acl plugin testing:', () => {
     }).then((createdPlugin) => {
       expect(createdPlugin.name).toEqual('acl');
       expect(createdPlugin.api_id).toEqual(api.id);
-      expect(createdPlugin.config).toEqual({'whitelist': ['foo'], 'hide_groups_header': false});
+      if (['0.10', '0.11', '0.12', '0.13'].includes(process.env.KONG_VERSION)) {
+        expect(createdPlugin.config).toEqual({'whitelist': ['foo'], 'hide_groups_header': false});
+      } else {
+        expect(createdPlugin.config).toEqual({'whitelist': ['foo']});
+      }
       done();
     });
   });
@@ -92,7 +100,11 @@ describe('Acl plugin testing:', () => {
     }).then((updatedPlugin) => {
       expect(updatedPlugin.name).toEqual('acl');
       expect(updatedPlugin.api_id).toBeUndefined();
-      expect(updatedPlugin.config).toEqual({'whitelist': ['admin'], 'blacklist': {}, 'hide_groups_header': false});
+      if (['0.10', '0.11', '0.12', '0.13'].includes(process.env.KONG_VERSION)) {
+        expect(updatedPlugin.config).toEqual({'whitelist': ['admin'], 'blacklist': {}});
+      } else {
+        expect(updatedPlugin.config).toEqual({'whitelist': ['admin'], 'blacklist': {}, 'hide_groups_header': false});
+      }
       done();
     });
   });
